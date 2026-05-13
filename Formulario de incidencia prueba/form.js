@@ -6,9 +6,7 @@ let pendientes = 0;
 let entregados = 0;
 let noEntregados = 0;
 
-// =========================
-// CARGAR DATOS
-// =========================
+
 window.onload = function () {
     let incidencias = JSON.parse(localStorage.getItem("incidencias")) || [];
 
@@ -21,9 +19,7 @@ window.onload = function () {
     actualizarContador();
 };
 
-// =========================
-// FORMULARIO
-// =========================
+
 formulario.addEventListener("submit", function(e) {
     e.preventDefault();
 
@@ -36,27 +32,27 @@ formulario.addEventListener("submit", function(e) {
 
     // VALIDACIÓN
     if (!/^[0-9]+$/.test(numero) || Number(numero) <= 0) {
-        alert("❌ Número inválido");
+        alert("Número inválido");
         return;
     }
 
     if (!/^[A-Za-zÁÉÍÓÚáéíóúñÑ\s]{3,}$/.test(nombre)) {
-        alert("❌ Nombre inválido");
+        alert("Nombre inválido");
         return;
     }
 
     if (!/^[A-Za-z0-9\-]{3,}$/.test(ref)) {
-        alert("❌ Referencia inválida");
+        alert("Referencia inválida");
         return;
     }
 
     if (fecha === "" || hora === "") {
-        alert("❌ Fecha u hora vacía");
+        alert("Fecha u hora vacía");
         return;
     }
 
     if (incidencia.length < 5) {
-        alert("❌ Incidencia demasiado corta");
+        alert("Incidencia demasiado corta");
         return;
     }
 
@@ -79,14 +75,11 @@ formulario.addEventListener("submit", function(e) {
     pendientes++;
     actualizarContador();
 
-    alert("✅ Incidencia añadida");
+    alert("Incidencia añadida");
 
     formulario.reset();
 });
 
-// =========================
-// CREAR FILA
-// =========================
 function crearFila(i) {
     let fila = document.createElement("tr");
 
@@ -107,9 +100,7 @@ function crearFila(i) {
     tabla.appendChild(fila);
 }
 
-// =========================
-// CAMBIAR ESTADO
-// =========================
+
 function resolver(boton) {
     let fila = boton.parentElement.parentElement;
     let estado = fila.querySelector(".estado");
@@ -142,16 +133,13 @@ function resolver(boton) {
     actualizarContador();
 }
 
-// =========================
-// ELIMINAR
-// =========================
+
 function eliminar(boton) {
     let fila = boton.parentElement.parentElement;
     let numero = fila.children[0].textContent;
 
     if (confirm("¿Seguro que quieres eliminar esta incidencia?")) {
 
-        // eliminar de localStorage
         let lista = JSON.parse(localStorage.getItem("incidencias")) || [];
         lista = lista.filter(i => i.numero !== numero);
         localStorage.setItem("incidencias", JSON.stringify(lista));
@@ -165,9 +153,6 @@ function eliminar(boton) {
     }
 }
 
-// =========================
-// CONTADOR
-// =========================
 function actualizarContador() {
     document.getElementById("contadorTotal").textContent = "Total: " + total;
     document.getElementById("contadorPendientes").textContent = "Pendientes: " + pendientes;
